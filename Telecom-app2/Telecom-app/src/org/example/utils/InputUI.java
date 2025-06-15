@@ -24,9 +24,14 @@ public class InputUI extends JFrame {
     protected Map<String, JPanel> panels = new HashMap<>();
     private ComparePanel comparePanel;
 
+    // ✅ 음악 thread 추가
+    private MusicPlayer musicPlayer;
+
     public InputUI() {
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
+        // ✅ MusicPlayer 인스턴스 생성 (아직 start 안함)
+        musicPlayer = new MusicPlayer();
 
         // ✅ 동일 인스턴스로 등록
         InputUIPanelStep1 step1Panel = new InputUIPanelStep1(this);
@@ -69,6 +74,10 @@ public class InputUI extends JFrame {
 
     public void showPanel(String name) {
         cardLayout.show(cardPanel, name);
+
+        if (name.equals("notice")) {
+            ((NoticePanel) panels.get("notice")).onShow();
+        }
     }
 
     public JPanel getPanel(String name) {
@@ -114,7 +123,14 @@ public class InputUI extends JFrame {
         panels.put("mybenefit", benefitPanel);
         cardPanel.add(benefitPanel, "mybenefit");
         showPanel("mybenefit");
-        }
-
     }
 
+    // ✅ MusicPlayer 제어 메소드 추가 (패널에서 접근용)
+    public void startMusic() {
+        musicPlayer.start();
+    }
+
+    public void stopMusic() {
+        musicPlayer.stopMusic();
+    }
+}

@@ -50,6 +50,7 @@ public class FinishPanel extends JPanel {
         endButton.setForeground(Color.WHITE);
         endButton.setPreferredSize(new Dimension(180, 40));
         endButton.addActionListener((ActionEvent e) -> {
+            parentFrame.stopMusic();
             System.exit(0);
 
             add(centerPanel, BorderLayout.CENTER);

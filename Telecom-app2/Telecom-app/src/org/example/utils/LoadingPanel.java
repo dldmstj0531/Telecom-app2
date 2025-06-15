@@ -88,15 +88,19 @@ public class LoadingPanel extends JPanel {
         int imageWidth = 600;
         int imageHeight = 360;
 
-        String path = System.getProperty("user.dir") + "C:/Users/dldms/Telecom-app2/Telecom-app2/Telecom-app/src/org/example/utils/bird1.jpg";
-        ImageIcon originalIcon = new ImageIcon(path);
-        Image scaledImage = originalIcon.getImage().getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
-        ImageIcon resizedIcon = new ImageIcon(scaledImage);
+        try {
+            // ✅ 경로 안정화: getResource 이용 (classpath 기준)
+            ImageIcon originalIcon = new ImageIcon(getClass().getResource("/org/example/utils/bird1.jpg"));
+            Image scaledImage = originalIcon.getImage().getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
+            ImageIcon resizedIcon = new ImageIcon(scaledImage);
+            JLabel imageLabel = new JLabel(resizedIcon);
+            imageLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+            imageLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
+            centerPanel.add(imageLabel);
+        } catch (Exception e) {
+            System.err.println("❌ 이미지 로드 실패: " + e.getMessage());
+        }
 
-        JLabel imageLabel = new JLabel(resizedIcon);
-        imageLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        imageLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
-        centerPanel.add(imageLabel);
 
         JLabel birdInfo = new JLabel("지금 화면에 보이는 새는 'Red Knot'로, 장거리 비행을 견디는 강인한 철새입니다.");
         birdInfo.setFont(new Font("Malgun Gothic", Font.PLAIN, 12));
@@ -121,4 +125,3 @@ public class LoadingPanel extends JPanel {
         timer.start();
     }
 }
-

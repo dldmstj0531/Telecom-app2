@@ -67,4 +67,40 @@ public class BenefitChecker {
             }
         }
         return extraList;
-}}
+    }
+
+    // ✅ 추가: 특정 혜택 적용 시 요금 계산 메소드
+    public static double calculateFeeWithSpecificBenefit(Customer customer, int originalFee, String benefitType) {
+        List<Discount> discountList = DiscountDAO.getAllDiscounts();
+
+        for (Discount discount : discountList) {
+            String condition = discount.getCondition();
+
+            if (condition.equals("isDisabled") && benefitType.equals("handicapped")) {
+                String discountText = discount.getDiscountAmount().replaceAll("[^0-9]", "");
+                double rate = Double.parseDouble(discountText) / 100.0;
+                return originalFee * (1 - rate);
+            }
+            if (condition.equals("isLivingSupport") && benefitType.equals("basicLivelihood")) {
+                String discountText = discount.getDiscountAmount().replaceAll("[^0-9]", "");
+                double rate = Double.parseDouble(discountText) / 100.0;
+                return originalFee * (1 - rate);
+            }
+            if (condition.equals("isHousingSupport") && benefitType.equals("housingEducation")) {
+                String discountText = discount.getDiscountAmount().replaceAll("[^0-9]", "");
+                double rate = Double.parseDouble(discountText) / 100.0;
+                return originalFee * (1 - rate);
+            }
+            if (condition.equals("isPensioner") && benefitType.equals("pension")) {
+                String discountText = discount.getDiscountAmount().replaceAll("[^0-9]", "");
+                double rate = Double.parseDouble(discountText) / 100.0;
+                return originalFee * (1 - rate);
+            }
+        }
+
+        // 해당 혜택이 없을 경우 -> 기본요금 그대로 반환
+        return originalFee;
+    }
+
+
+}

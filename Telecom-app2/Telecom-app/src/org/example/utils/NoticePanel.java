@@ -12,6 +12,9 @@ public class NoticePanel extends JPanel {
         this.parentFrame = parentFrame;
         setLayout(new BorderLayout());
 
+        // 음악 스레드 시작
+        //parentFrame.startMusic();
+
         JPanel topPanel = new JPanel(new BorderLayout());
         JLabel titleLabel = new JLabel("통신사 변경 가이드 프로그램");
         titleLabel.setFont(new Font("Malgun Gothic", Font.BOLD, 14));
@@ -89,6 +92,11 @@ public class NoticePanel extends JPanel {
         centerPanel.add(Box.createVerticalStrut(20));
         centerPanel.add(agreeButton);
         add(centerPanel, BorderLayout.CENTER);
+    }
+
+    // ✅ 여기 새로 추가!
+    public void onShow() {
+        parentFrame.startMusic();
     }
 
     private JLabel createBoxedLabel(String msg) {
